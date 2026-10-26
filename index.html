@@ -1,0 +1,2961 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="屿见咖啡，来自北纬 24° 的海岛小烘焙所。当季单一产地咖啡豆，小批量慢烘，新鲜送达。">
+  <meta name="theme-color" content="#173c32">
+  <title>屿见咖啡 · 把海岛的慢，烘进每一杯</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23173c32'/%3E%3Ccircle cx='32' cy='25' r='11' fill='%23e8b64b'/%3E%3Cpath d='M12 42c8-6 14 6 22 0s12-6 18 0' fill='none' stroke='%23f7f0e4' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+  <!-- 单文件版本：所有样式已内联，复制这一个 HTML 文件即可运行 -->
+  <style>
+/* =========================================================
+   屿见咖啡 · 响应式静态落地页
+   布局方式：全站 Flexbox（无 CSS Grid、无外部依赖）
+   ========================================================= */
+
+:root {
+  color-scheme: light;
+  --paper: #f4edde;
+  --paper-deep: #e9dfcb;
+  --cream: #fffaf0;
+  --ink: #173c32;
+  --ink-deep: #102c25;
+  --ink-2: #34534a;
+  --muted: #5f6f65;
+  --accent: #c75a3a;
+  --accent-deep: #ad4b2f;
+  --sun: #e8b64b;
+  --sage: #a8bba5;
+  --line: rgba(23, 60, 50, 0.14);
+  --line-strong: rgba(23, 60, 50, 0.24);
+  --font-sans: "Avenir Next", "SF Pro Text", "Segoe UI Variable Text", "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", "Microsoft YaHei", sans-serif;
+  --font-serif: "Iowan Old Style", "Baskerville", "Palatino Linotype", "Book Antiqua", "Songti SC", "STSong", "SimSun", "宋体", serif;
+  --shell: min(1160px, calc(100% - 64px));
+  --radius-lg: 32px;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 112px;
+  scrollbar-gutter: stable;
+  scrollbar-color: rgba(23, 60, 50, 0.42) var(--paper-deep);
+  scrollbar-width: thin;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background: var(--paper);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+::selection {
+  color: var(--cream);
+  background: var(--accent);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+svg {
+  display: block;
+}
+
+p,
+h1,
+h2,
+h3,
+blockquote {
+  overflow-wrap: break-word;
+}
+
+.shell {
+  width: var(--shell);
+  margin-inline: auto;
+}
+
+.noise {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.92' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  mix-blend-mode: multiply;
+}
+
+.skip-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 10000;
+  padding: 10px 16px;
+  border-radius: 999px;
+  color: var(--cream);
+  background: var(--ink);
+  font-size: 13px;
+  transform: translateY(-160%);
+  transition: transform 0.25s var(--ease);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+/* ---------- announcement ---------- */
+
+.announcement {
+  color: rgba(255, 250, 240, 0.78);
+  background: var(--ink-deep);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+}
+
+.announcement-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 9px 26px;
+  min-height: 37px;
+  padding: 6px 0;
+}
+
+.announcement p {
+  margin: 0;
+}
+
+.announcement a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--sun);
+  transition: color 0.2s ease;
+}
+
+.announcement a:hover {
+  color: var(--cream);
+}
+
+/* ---------- header ---------- */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(244, 237, 222, 0.86);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.header-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 22px 34px;
+  min-height: 82px;
+}
+
+.brand {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 11px;
+}
+
+.brand-mark {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  color: var(--cream);
+  background: var(--ink);
+  box-shadow: 0 8px 18px -10px rgba(16, 44, 37, 0.7);
+}
+
+.brand-type {
+  display: flex;
+  flex-direction: column;
+  color: var(--ink);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1;
+}
+
+.brand-type small {
+  margin-top: 5px;
+  color: var(--muted);
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: clamp(18px, 2.4vw, 34px);
+  margin-left: auto;
+}
+
+.nav a {
+  position: relative;
+  padding: 6px 0;
+  color: var(--ink-2);
+  font-size: 13px;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+.nav a::after {
+  position: absolute;
+  right: 0;
+  bottom: 1px;
+  left: 0;
+  height: 1px;
+  content: "";
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s var(--ease);
+}
+
+.nav a:hover {
+  color: var(--ink);
+}
+
+.nav a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.header-cta {
+  flex-shrink: 0;
+}
+
+/* ---------- buttons & links ---------- */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 15px 24px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  color: var(--cream);
+  background: var(--ink);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  white-space: nowrap;
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s var(--ease),
+    box-shadow 0.25s ease;
+}
+
+.button svg {
+  flex-shrink: 0;
+  transition: transform 0.25s var(--ease);
+}
+
+.button:hover {
+  background: #245246;
+  box-shadow: 0 16px 28px -18px rgba(16, 44, 37, 0.8);
+  transform: translateY(-2px);
+}
+
+.button:hover svg {
+  transform: translateX(4px);
+}
+
+.button--small {
+  gap: 9px;
+  padding: 10px 17px;
+  font-size: 11px;
+}
+
+.button--cream {
+  color: var(--ink);
+  background: var(--cream);
+}
+
+.button--cream:hover {
+  color: var(--ink-deep);
+  background: #fffdf8;
+}
+
+.text-link,
+.arrow-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--line-strong);
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  transition:
+    border-color 0.25s ease,
+    color 0.25s ease;
+}
+
+.text-link span,
+.arrow-link span {
+  color: var(--accent);
+  transition: transform 0.25s var(--ease);
+}
+
+.text-link:hover,
+.arrow-link:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.text-link:hover span,
+.arrow-link:hover span {
+  transform: translate(3px, -3px);
+}
+
+/* ---------- shared type ---------- */
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0 0 22px;
+  color: var(--ink-2);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.19em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.eyebrow-dot {
+  width: 6px;
+  height: 6px;
+  flex: 0 0 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 4px rgba(199, 90, 58, 0.12);
+}
+
+.eyebrow--light {
+  color: rgba(255, 250, 240, 0.72);
+}
+
+.eyebrow--light .eyebrow-dot {
+  background: var(--sun);
+  box-shadow: 0 0 0 4px rgba(232, 182, 75, 0.14);
+}
+
+.section {
+  padding: clamp(82px, 10vw, 128px) 0;
+}
+
+h2 {
+  margin: 0;
+  color: var(--ink);
+  font-size: clamp(2.35rem, 4vw, 3.9rem);
+  font-weight: 700;
+  letter-spacing: -0.055em;
+  line-height: 1.13;
+}
+
+.stars {
+  color: #bb8424;
+  font-size: 12px;
+  letter-spacing: 2px;
+  line-height: 1;
+}
+
+/* ---------- hero ---------- */
+
+.hero {
+  position: relative;
+  padding: clamp(48px, 7vw, 88px) 0 clamp(68px, 8vw, 112px);
+  overflow: hidden;
+}
+
+.hero::before {
+  position: absolute;
+  top: -260px;
+  right: -180px;
+  width: 680px;
+  height: 680px;
+  border-radius: 50%;
+  content: "";
+  background: radial-gradient(circle, rgba(232, 182, 75, 0.16), transparent 66%);
+  pointer-events: none;
+}
+
+.hero-inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: clamp(42px, 5vw, 72px);
+}
+
+.hero-copy {
+  flex: 1 1 54%;
+  min-width: 0;
+  animation: rise-in 0.8s var(--ease) both;
+}
+
+.hero h1 {
+  margin: 0;
+  color: var(--ink);
+  font-size: clamp(3.15rem, 5.9vw, 5.25rem);
+  font-weight: 700;
+  letter-spacing: -0.06em;
+  line-height: 1.08;
+}
+
+.ink-accent {
+  position: relative;
+  display: inline-block;
+  color: var(--accent);
+}
+
+.ink-accent::after {
+  position: absolute;
+  right: 4%;
+  bottom: 0.02em;
+  left: 4%;
+  height: 0.08em;
+  border-radius: 50%;
+  content: "";
+  background: var(--accent);
+  opacity: 0.24;
+  transform: rotate(-1.2deg);
+}
+
+.lede {
+  max-width: 500px;
+  margin: 28px 0 0;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.95;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 22px 28px;
+  margin-top: 36px;
+}
+
+.hero-proof {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  max-width: 430px;
+  margin-top: 38px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
+
+.avatar-stack {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  margin-left: -10px;
+  border: 2px solid var(--paper);
+  border-radius: 50%;
+  color: rgba(23, 60, 50, 0.8);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.avatar:first-child {
+  margin-left: 0;
+}
+
+.avatar--one {
+  background: #ddba96;
+}
+
+.avatar--two {
+  background: #bacab5;
+}
+
+.avatar--three {
+  background: #d78a6d;
+}
+
+.proof-copy .stars {
+  font-size: 10px;
+}
+
+.proof-copy p {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: 0.02em;
+}
+
+/* ---------- hero art ---------- */
+
+.hero-art {
+  position: relative;
+  display: flex;
+  flex: 0 1 46%;
+  align-items: center;
+  justify-content: center;
+  max-width: 520px;
+  min-height: 590px;
+  border-radius: 34px;
+  background: linear-gradient(148deg, #1e4c3f 0%, #12332b 72%);
+  box-shadow: 0 40px 70px -42px rgba(16, 44, 37, 0.75);
+  overflow: hidden;
+  isolation: isolate;
+  animation: art-in 1s 0.08s var(--ease) both;
+}
+
+.hero-art::before {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  content: "";
+  background:
+    linear-gradient(115deg, rgba(255, 255, 255, 0.07), transparent 42%),
+    radial-gradient(circle at 18% 92%, rgba(168, 187, 165, 0.16), transparent 38%);
+  pointer-events: none;
+}
+
+.art-glow {
+  position: absolute;
+  top: 24%;
+  left: 8%;
+  z-index: 0;
+  width: 360px;
+  height: 360px;
+  border-radius: 50%;
+  background: rgba(232, 182, 75, 0.09);
+  filter: blur(20px);
+}
+
+.art-sun {
+  position: absolute;
+  top: -46px;
+  right: -36px;
+  z-index: 0;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  background: linear-gradient(155deg, #f0ca72 0%, #e1a94c 100%);
+  box-shadow: inset -20px -18px 40px rgba(172, 107, 40, 0.14);
+}
+
+.art-rings {
+  position: absolute;
+  top: -180px;
+  right: -220px;
+  z-index: 1;
+  width: 650px;
+  height: 650px;
+  border-radius: 50%;
+  background: repeating-radial-gradient(
+    circle,
+    transparent 0 44px,
+    rgba(255, 250, 240, 0.075) 45px 46px
+  );
+  pointer-events: none;
+}
+
+.stamp {
+  position: absolute;
+  top: 26px;
+  left: 26px;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 84px;
+  height: 84px;
+  border: 1px dashed rgba(255, 250, 240, 0.44);
+  border-radius: 50%;
+  color: rgba(255, 250, 240, 0.68);
+  background: rgba(16, 44, 37, 0.18);
+  backdrop-filter: blur(4px);
+  transform: rotate(-12deg);
+}
+
+.stamp span {
+  font-size: 6px;
+  letter-spacing: 0.15em;
+  line-height: 1.6;
+}
+
+.stamp strong {
+  margin: 1px 0;
+  color: var(--sun);
+  font-family: var(--font-serif);
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+.pack {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  height: 352px;
+  border-radius: 20px 20px 26px 26px;
+  background: linear-gradient(160deg, #fffaf0 8%, #f1e4c9 100%);
+  box-shadow:
+    0 34px 54px -28px rgba(0, 0, 0, 0.65),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  overflow: hidden;
+  transform: rotate(-4deg);
+  animation: float 6.5s 1.1s ease-in-out infinite;
+}
+
+.pack::after {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  content: "";
+  background: linear-gradient(
+    100deg,
+    rgba(255, 255, 255, 0.4),
+    transparent 26%,
+    transparent 76%,
+    rgba(23, 60, 50, 0.08)
+  );
+  pointer-events: none;
+}
+
+.pack-seal {
+  display: flex;
+  flex: 0 0 38px;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 250, 240, 0.8);
+  background: var(--ink);
+  font-size: 7px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+}
+
+.pack-label {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 15px;
+  padding: 16px 12px;
+  border: 1px solid rgba(23, 60, 50, 0.22);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.18);
+  text-align: center;
+}
+
+.pack-label::before,
+.pack-label::after {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  content: "";
+  background: rgba(23, 60, 50, 0.28);
+}
+
+.pack-label::before {
+  top: 8px;
+  left: 8px;
+}
+
+.pack-label::after {
+  right: 8px;
+  bottom: 8px;
+}
+
+.pack-overline {
+  color: var(--muted);
+  font-size: 7px;
+  letter-spacing: 0.18em;
+}
+
+.pack-brand {
+  margin-top: 3px;
+  color: var(--ink);
+  font-family: var(--font-serif);
+  font-size: 40px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1.18;
+}
+
+.pack-name {
+  margin-top: 8px;
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+}
+
+.pack-notes {
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 8px;
+  letter-spacing: 0.13em;
+}
+
+.pack-divider {
+  width: 26px;
+  height: 1px;
+  margin: 13px 0;
+  background: rgba(23, 60, 50, 0.3);
+}
+
+.pack-meta {
+  color: var(--muted);
+  font-size: 7px;
+  letter-spacing: 0.15em;
+}
+
+.pack-bottom {
+  padding: 0 0 14px;
+  color: var(--muted);
+  font-size: 7px;
+  letter-spacing: 0.18em;
+  text-align: center;
+}
+
+.float-card {
+  position: absolute;
+  bottom: 36px;
+  left: 26px;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 184px;
+  padding: 11px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 14px;
+  background: rgba(255, 250, 240, 0.94);
+  box-shadow: 0 18px 30px -18px rgba(0, 0, 0, 0.55);
+  transform: rotate(2deg);
+  backdrop-filter: blur(10px);
+}
+
+.float-icon {
+  display: flex;
+  flex: 0 0 34px;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  color: var(--ink);
+  background: #f2e2c5;
+}
+
+.float-card div {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.45;
+}
+
+.float-card div span {
+  color: var(--muted);
+  font-size: 8px;
+  letter-spacing: 0.08em;
+}
+
+.float-card div strong {
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.float-dot {
+  width: 6px;
+  height: 6px;
+  margin-left: auto;
+  border-radius: 50%;
+  background: #76986f;
+  box-shadow: 0 0 0 4px rgba(118, 152, 111, 0.14);
+}
+
+.art-leaf {
+  position: absolute;
+  bottom: -22px;
+  left: -34px;
+  z-index: 2;
+  width: 216px;
+  height: 216px;
+  color: rgba(168, 187, 165, 0.34);
+  transform: rotate(-8deg);
+}
+
+.art-caption {
+  position: absolute;
+  right: 17px;
+  bottom: 34px;
+  z-index: 4;
+  margin: 0;
+  color: rgba(255, 250, 240, 0.45);
+  font-size: 6px;
+  letter-spacing: 0.2em;
+  writing-mode: vertical-rl;
+}
+
+/* ---------- promise strip ---------- */
+
+.promise {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: rgba(255, 250, 240, 0.32);
+}
+
+.promise-inner {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 25px 0;
+}
+
+.promise-item {
+  display: flex;
+  flex: 1 1 220px;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 6px 24px;
+  border-left: 1px solid var(--line);
+}
+
+.promise-item:first-child {
+  padding-left: 0;
+  border-left: 0;
+}
+
+.promise-item > span {
+  padding-top: 2px;
+  color: var(--accent);
+  font-family: var(--font-serif);
+  font-size: 11px;
+  line-height: 1;
+}
+
+.promise-item p {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+}
+
+.promise-item small {
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+/* ---------- products ---------- */
+
+.section-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 36px 60px;
+}
+
+.section-head-aside {
+  max-width: 380px;
+  padding-bottom: 8px;
+}
+
+.section-head-aside p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.9;
+}
+
+.section-head-aside .arrow-link {
+  margin-top: 20px;
+}
+
+.product-grid {
+  display: flex;
+  gap: 22px;
+  margin-top: 48px;
+}
+
+.product-card {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 26px;
+  background: var(--cream);
+  overflow: hidden;
+  transition:
+    transform 0.35s var(--ease),
+    box-shadow 0.35s var(--ease),
+    border-color 0.35s ease;
+}
+
+.product-card:hover {
+  border-color: rgba(23, 60, 50, 0.22);
+  box-shadow: 0 34px 52px -38px rgba(23, 60, 50, 0.6);
+  transform: translateY(-7px);
+}
+
+.product-visual {
+  position: relative;
+  display: flex;
+  flex: 0 0 300px;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  overflow: hidden;
+}
+
+.product-visual::before {
+  position: absolute;
+  top: -82px;
+  left: -82px;
+  width: 250px;
+  height: 250px;
+  border: 1px solid rgba(255, 250, 240, 0.18);
+  border-radius: 50%;
+  content: "";
+  background: rgba(255, 250, 240, 0.1);
+}
+
+.product-visual::after {
+  position: absolute;
+  right: -60px;
+  bottom: -92px;
+  width: 160px;
+  height: 160px;
+  border: 1px solid rgba(23, 60, 50, 0.12);
+  border-radius: 50%;
+  content: "";
+}
+
+.product-visual--sun {
+  background: linear-gradient(145deg, #efc76d 0%, #dfaa50 100%);
+}
+
+.product-visual--clay {
+  background: linear-gradient(145deg, #da8d69 0%, #c56848 100%);
+}
+
+.product-visual--sage {
+  background: linear-gradient(145deg, #a4b8a1 0%, #839f86 100%);
+}
+
+.product-no {
+  position: absolute;
+  right: 22px;
+  bottom: -22px;
+  color: rgba(255, 250, 240, 0.2);
+  font-family: var(--font-serif);
+  font-size: 132px;
+  font-weight: 600;
+  letter-spacing: -0.08em;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.roast-pill {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 2;
+  padding: 7px 11px;
+  border: 1px solid rgba(255, 250, 240, 0.32);
+  border-radius: 999px;
+  color: var(--ink);
+  background: rgba(255, 250, 240, 0.6);
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  backdrop-filter: blur(6px);
+}
+
+.cup {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #fffaf0, #e9dac1);
+  box-shadow:
+    0 24px 36px -22px rgba(48, 31, 18, 0.65),
+    inset 0 -4px 10px rgba(48, 31, 18, 0.12);
+  transition: transform 0.45s var(--ease);
+}
+
+.product-card:hover .cup {
+  transform: translateY(-5px) rotate(-2deg) scale(1.03);
+}
+
+.cup::before {
+  width: 132px;
+  height: 132px;
+  border-radius: 50%;
+  content: "";
+  background: radial-gradient(
+    circle at 34% 28%,
+    #bd8354 0%,
+    #94603a 25%,
+    #62371f 62%,
+    #3c1f11 100%
+  );
+  box-shadow: inset 0 9px 18px rgba(0, 0, 0, 0.3);
+}
+
+.cup::after {
+  position: absolute;
+  width: 78px;
+  height: 58px;
+  border: 9px solid rgba(240, 221, 191, 0.2);
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  content: "";
+  transform: rotate(-22deg) translate(10px, -8px);
+}
+
+.product-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 22px 23px 21px;
+}
+
+.product-title {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.product-title h3 {
+  margin: 0;
+  color: var(--ink);
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 1.3;
+}
+
+.price {
+  flex-shrink: 0;
+  color: var(--accent);
+  font-family: var(--font-serif);
+  font-size: 17px;
+  letter-spacing: 0.01em;
+}
+
+.product-en {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+}
+
+.notes {
+  margin: 17px 0 22px;
+  color: var(--ink-2);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+}
+
+.product-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 15px;
+  border-top: 1px solid var(--line);
+}
+
+.product-foot > span {
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.product-foot a {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--ink);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  transition: color 0.2s ease;
+}
+
+.product-foot a span {
+  color: var(--accent);
+  transition: transform 0.25s var(--ease);
+}
+
+.product-foot a:hover {
+  color: var(--accent);
+}
+
+.product-foot a:hover span {
+  transform: translate(2px, -2px);
+}
+
+/* ---------- story ---------- */
+
+.story {
+  border-top: 1px solid rgba(23, 60, 50, 0.1);
+  border-bottom: 1px solid rgba(23, 60, 50, 0.1);
+  background: linear-gradient(180deg, #e2e9dd 0%, #d8e2d4 100%);
+}
+
+.story-inner {
+  display: flex;
+  align-items: center;
+  gap: clamp(48px, 7vw, 96px);
+}
+
+.story-art {
+  position: relative;
+  flex: 1 1 50%;
+  min-width: 0;
+  min-height: 580px;
+  border-radius: var(--radius-lg);
+  background:
+    radial-gradient(circle at 15% 90%, rgba(255, 250, 240, 0.28), transparent 34%),
+    #cbd8c8;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.story-art::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  content: "";
+  background: repeating-linear-gradient(
+    112deg,
+    transparent 0 58px,
+    rgba(23, 60, 50, 0.035) 59px 60px
+  );
+  pointer-events: none;
+}
+
+.story-sun {
+  position: absolute;
+  top: -72px;
+  right: -62px;
+  z-index: 0;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: var(--sun);
+  opacity: 0.85;
+}
+
+.story-stamp {
+  position: absolute;
+  top: 28px;
+  right: 30px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 76px;
+  height: 76px;
+  border: 1px solid rgba(23, 60, 50, 0.32);
+  border-radius: 50%;
+  color: var(--ink);
+  font-size: 7px;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  line-height: 1.55;
+  text-align: center;
+  transform: rotate(9deg);
+}
+
+.story-card {
+  position: absolute;
+  top: 12%;
+  left: 8%;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  width: 61%;
+  min-height: 400px;
+  padding: 25px;
+  border: 1px solid rgba(23, 60, 50, 0.1);
+  border-radius: 24px;
+  background: var(--cream);
+  box-shadow: 0 35px 55px -38px rgba(23, 60, 50, 0.5);
+  transform: rotate(-1.5deg);
+}
+
+.story-card-label {
+  color: var(--muted);
+  font-size: 7px;
+  font-weight: 600;
+  letter-spacing: 0.17em;
+}
+
+.story-big {
+  margin: 16px 0 0;
+  color: var(--ink);
+  font-family: var(--font-serif);
+  font-size: 88px;
+  font-weight: 500;
+  letter-spacing: -0.07em;
+  line-height: 0.9;
+}
+
+.story-big span {
+  margin-left: 5px;
+  color: var(--accent);
+  font-size: 25px;
+  letter-spacing: 0;
+}
+
+.story-card-copy {
+  margin: 19px 0 14px;
+  color: var(--ink-2);
+  font-size: 11px;
+  line-height: 1.9;
+}
+
+.roast-curve {
+  width: 100%;
+  height: auto;
+  margin-top: auto;
+  color: var(--accent);
+}
+
+.story-card-foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 8px;
+  padding-top: 11px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 7px;
+  letter-spacing: 0.1em;
+}
+
+.story-card-foot strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.story-note {
+  position: absolute;
+  right: 8%;
+  bottom: 8%;
+  z-index: 3;
+  width: 240px;
+  padding: 22px;
+  border-radius: 20px;
+  color: var(--cream);
+  background: var(--ink);
+  box-shadow: 0 28px 42px -30px rgba(16, 44, 37, 0.75);
+  transform: rotate(3deg);
+}
+
+.story-note svg {
+  margin-bottom: 12px;
+  color: var(--sun);
+}
+
+.story-note p {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 18px;
+  line-height: 1.55;
+  letter-spacing: 0.02em;
+}
+
+.story-note span {
+  display: block;
+  margin-top: 12px;
+  color: rgba(255, 250, 240, 0.55);
+  font-size: 8px;
+  letter-spacing: 0.06em;
+}
+
+.story-copy {
+  flex: 1 1 50%;
+  min-width: 0;
+}
+
+.story-lede {
+  max-width: 520px;
+  margin: 24px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.95;
+}
+
+.story-list {
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+}
+
+.story-item {
+  display: flex;
+  gap: 17px;
+  padding: 20px 0;
+  border-top: 1px solid rgba(23, 60, 50, 0.17);
+}
+
+.story-index {
+  display: flex;
+  flex: 0 0 32px;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid rgba(23, 60, 50, 0.24);
+  border-radius: 50%;
+  color: var(--accent);
+  font-family: var(--font-serif);
+  font-size: 10px;
+}
+
+.story-item h3 {
+  margin: 3px 0 5px;
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.4;
+}
+
+.story-item p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+.story-link {
+  margin-top: 27px;
+}
+
+/* ---------- testimonial ---------- */
+
+.voices {
+  padding: clamp(72px, 9vw, 112px) 0 clamp(20px, 3vw, 36px);
+}
+
+.voices-panel {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(36px, 6vw, 72px);
+  padding: clamp(34px, 5vw, 64px);
+  border-radius: var(--radius-lg);
+  color: var(--cream);
+  background: linear-gradient(135deg, #173c32 0%, #0e2b23 100%);
+  box-shadow: 0 38px 68px -50px rgba(16, 44, 37, 0.85);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.voices-panel::after {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  content: "";
+  background: repeating-radial-gradient(
+    circle at 91% 5%,
+    transparent 0 46px,
+    rgba(255, 250, 240, 0.045) 47px 48px
+  );
+  pointer-events: none;
+}
+
+.voices-meta {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex: 0 0 180px;
+  flex-direction: column;
+  gap: 18px;
+  align-self: stretch;
+  padding-right: 34px;
+  border-right: 1px solid rgba(255, 250, 240, 0.16);
+}
+
+.voices-meta .eyebrow {
+  margin: 0;
+}
+
+.voices-meta .stars {
+  color: var(--sun);
+  font-size: 12px;
+}
+
+.voices-label {
+  margin: auto 0 0;
+  color: rgba(255, 250, 240, 0.5);
+  font-size: 10px;
+  letter-spacing: 0.02em;
+}
+
+.voices-body {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  min-width: 0;
+}
+
+.voices-body blockquote {
+  max-width: 760px;
+  margin: 0;
+  color: var(--cream);
+  font-size: clamp(1.55rem, 3.1vw, 2.6rem);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 1.52;
+}
+
+.quote-author {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.author-avatar {
+  display: flex;
+  flex: 0 0 40px;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: var(--ink);
+  background: #ddba96;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.quote-author p {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px 10px;
+  margin: 0;
+  color: var(--cream);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.quote-author small {
+  color: rgba(255, 250, 240, 0.48);
+  font-size: 9px;
+  font-weight: 400;
+}
+
+.quote-mark {
+  position: absolute;
+  right: 24px;
+  bottom: -58px;
+  z-index: 1;
+  color: rgba(255, 250, 240, 0.07);
+  font-family: var(--font-serif);
+  font-size: 220px;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.voices-sun {
+  position: absolute;
+  top: -90px;
+  right: -60px;
+  z-index: 0;
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  background: var(--sun);
+  opacity: 0.055;
+}
+
+/* ---------- CTA ---------- */
+
+.cta {
+  padding-top: 0;
+  padding-bottom: clamp(80px, 10vw, 120px);
+}
+
+.cta-panel {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 38px;
+  padding: clamp(38px, 5.7vw, 68px);
+  border-radius: var(--radius-lg);
+  color: var(--cream);
+  background: linear-gradient(128deg, #cf6442 0%, #b54e31 100%);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.cta-sun {
+  position: absolute;
+  top: -168px;
+  right: 10%;
+  z-index: 0;
+  width: 380px;
+  height: 380px;
+  border-radius: 50%;
+  background: var(--sun);
+  opacity: 0.24;
+}
+
+.cta-word {
+  position: absolute;
+  right: 20px;
+  bottom: -44px;
+  z-index: 0;
+  color: rgba(255, 250, 240, 0.08);
+  font-family: var(--font-serif);
+  font-size: clamp(120px, 16vw, 200px);
+  font-weight: 600;
+  letter-spacing: -0.08em;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.cta .eyebrow--light {
+  color: rgba(255, 250, 240, 0.88);
+}
+
+.cta-copy {
+  position: relative;
+  z-index: 2;
+}
+
+.cta h2 {
+  color: var(--cream);
+  font-size: clamp(2.45rem, 5vw, 4.55rem);
+  line-height: 1.1;
+}
+
+.cta-copy > p:last-child {
+  margin: 17px 0 0;
+  color: rgba(255, 250, 240, 0.7);
+  font-size: 11px;
+  letter-spacing: 0.02em;
+}
+
+.cta .button {
+  position: relative;
+  z-index: 2;
+  flex-shrink: 0;
+}
+
+/* ---------- footer ---------- */
+
+.site-footer {
+  padding: clamp(54px, 7vw, 78px) 0 22px;
+  color: rgba(255, 250, 240, 0.62);
+  background: var(--ink-deep);
+}
+
+.footer-top {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 36px clamp(32px, 5vw, 70px);
+  padding-bottom: 46px;
+  border-bottom: 1px solid rgba(255, 250, 240, 0.12);
+}
+
+.footer-brand {
+  flex: 1 1 280px;
+  max-width: 340px;
+}
+
+.brand--footer .brand-mark {
+  background: rgba(255, 250, 240, 0.1);
+}
+
+.brand--footer .brand-type {
+  color: var(--cream);
+}
+
+.brand--footer .brand-type small {
+  color: rgba(255, 250, 240, 0.42);
+}
+
+.footer-brand > p {
+  margin: 20px 0 21px;
+  color: rgba(255, 250, 240, 0.52);
+  font-size: 11px;
+  line-height: 1.95;
+}
+
+.socials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.socials a {
+  padding: 7px 12px;
+  border: 1px solid rgba(255, 250, 240, 0.18);
+  border-radius: 999px;
+  color: rgba(255, 250, 240, 0.7);
+  font-size: 9px;
+  letter-spacing: 0.04em;
+  transition:
+    border-color 0.25s ease,
+    color 0.25s ease,
+    background-color 0.25s ease;
+}
+
+.socials a:hover {
+  border-color: rgba(255, 250, 240, 0.38);
+  color: var(--cream);
+  background: rgba(255, 250, 240, 0.06);
+}
+
+.footer-col {
+  flex: 1 1 140px;
+  min-width: 135px;
+}
+
+.footer-col h3 {
+  margin: 4px 0 20px;
+  color: rgba(255, 250, 240, 0.38);
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+}
+
+.footer-col > a:not(.footer-contact) {
+  display: block;
+  padding: 5px 0;
+  color: rgba(255, 250, 240, 0.68);
+  font-size: 11px;
+  transition: color 0.2s ease;
+}
+
+.footer-col > a:not(.footer-contact):hover {
+  color: var(--cream);
+}
+
+.footer-col p {
+  margin: 0 0 15px;
+  color: rgba(255, 250, 240, 0.48);
+  font-size: 11px;
+  line-height: 1.9;
+}
+
+.footer-contact {
+  display: inline-block;
+  margin-top: 3px;
+  color: var(--sun);
+  font-size: 11px;
+}
+
+.footer-big {
+  margin: 2px 0 16px !important;
+  color: var(--cream);
+  font-family: var(--font-serif);
+  font-size: 50px;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.footer-big span {
+  margin-left: 2px;
+  color: var(--sun);
+  font-size: 19px;
+  letter-spacing: 0;
+}
+
+.footer-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 24px;
+  padding-top: 19px;
+  color: rgba(255, 250, 240, 0.34);
+  font-size: 9px;
+  letter-spacing: 0.03em;
+}
+
+.footer-bottom p {
+  margin: 0;
+}
+
+.footer-bottom a {
+  color: rgba(255, 250, 240, 0.6);
+}
+
+.footer-bottom a span {
+  color: var(--sun);
+}
+
+/* ---------- animations ---------- */
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes art-in {
+  from {
+    opacity: 0;
+    transform: translateY(22px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: rotate(-4deg) translateY(0);
+  }
+  50% {
+    transform: rotate(-2.4deg) translateY(-9px);
+  }
+}
+
+/* =========================================================
+   Responsive
+   ========================================================= */
+
+@media (max-width: 1080px) {
+  .header-inner {
+    gap: 20px 24px;
+  }
+
+  .nav {
+    gap: 21px;
+  }
+
+  .hero-inner {
+    gap: 40px;
+  }
+
+  .hero-art {
+    min-height: 545px;
+  }
+
+  .pack {
+    width: 232px;
+    height: 332px;
+  }
+
+  .pack-brand {
+    font-size: 36px;
+  }
+
+  .art-sun {
+    width: 245px;
+    height: 245px;
+  }
+
+  .story-inner {
+    gap: 48px;
+  }
+
+  .story-card {
+    width: 64%;
+    padding: 22px;
+  }
+
+  .story-big {
+    font-size: 76px;
+  }
+
+  .story-note {
+    width: 220px;
+    padding: 20px;
+  }
+}
+
+@media (max-width: 960px) {
+  .hero-inner {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero-copy {
+    max-width: 720px;
+  }
+
+  .hero-art {
+    width: 100%;
+    max-width: 620px;
+    min-height: 560px;
+    align-self: center;
+  }
+
+  .promise-item {
+    flex: 1 1 50%;
+    padding: 13px 20px 13px 0;
+    border-left: 0;
+  }
+
+  .promise-item:nth-child(even) {
+    padding-left: 24px;
+    border-left: 1px solid var(--line);
+  }
+
+  .promise-item:nth-child(3),
+  .promise-item:nth-child(4) {
+    border-top: 1px solid var(--line);
+  }
+
+  .section-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 26px;
+  }
+
+  .section-head-aside {
+    max-width: 600px;
+    padding-bottom: 0;
+  }
+
+  .product-grid {
+    flex-direction: column;
+  }
+
+  .product-card {
+    flex: 0 1 auto;
+    flex-direction: row;
+    min-height: 260px;
+  }
+
+  .product-visual {
+    flex: 0 0 41%;
+    height: auto;
+    min-height: 270px;
+  }
+
+  .product-body {
+    justify-content: center;
+    padding: 27px 28px;
+  }
+
+  .notes {
+    margin: 16px 0 22px;
+  }
+
+  .story-inner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 54px;
+  }
+
+  .story-art {
+    width: 100%;
+    max-width: 680px;
+    min-height: 560px;
+    align-self: center;
+  }
+
+  .story-copy {
+    width: 100%;
+    max-width: 680px;
+    align-self: center;
+  }
+
+  .voices-panel {
+    flex-direction: column;
+    gap: 25px;
+  }
+
+  .voices-meta {
+    flex: 0 0 auto;
+    align-self: stretch;
+    padding: 0 0 20px;
+    border-right: 0;
+    border-bottom: 1px solid rgba(255, 250, 240, 0.16);
+  }
+
+  .voices-meta .eyebrow {
+    margin-bottom: 14px;
+  }
+
+  .voices-label {
+    margin: 0;
+  }
+
+  .footer-brand {
+    flex-basis: 100%;
+    max-width: none;
+  }
+
+  .footer-col {
+    flex: 1 1 28%;
+  }
+}
+
+@media (max-width: 840px) {
+  .header-inner {
+    gap: 13px 20px;
+    min-height: 0;
+    padding: 14px 0 0;
+  }
+
+  .header-cta {
+    margin-left: auto;
+  }
+
+  .nav {
+    order: 3;
+    justify-content: space-between;
+    width: 100%;
+    margin-left: 0;
+    padding: 11px 0 13px;
+    border-top: 1px solid var(--line);
+    gap: 10px;
+  }
+
+  .nav a {
+    padding: 3px 0;
+    font-size: 12px;
+  }
+
+  html {
+    scroll-padding-top: 128px;
+  }
+
+  .art-caption {
+    display: none;
+  }
+}
+
+@media (max-width: 700px) {
+  :root {
+    --shell: calc(100% - 40px);
+  }
+
+  .announcement-inner {
+    justify-content: space-between;
+    gap: 5px 14px;
+    min-height: 34px;
+    font-size: 9px;
+  }
+
+  .brand-type {
+    font-size: 18px;
+  }
+
+  .brand-type small {
+    font-size: 7px;
+  }
+
+  .hero {
+    padding: 39px 0 64px;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.7rem, 10vw, 3.6rem);
+  }
+
+  .lede {
+    margin-top: 24px;
+    font-size: 14px;
+    line-height: 1.85;
+  }
+
+  .hero-actions {
+    gap: 18px 22px;
+    margin-top: 30px;
+  }
+
+  .hero-proof {
+    margin-top: 32px;
+    padding-top: 20px;
+  }
+
+  .hero-art {
+    min-height: 500px;
+    border-radius: 28px;
+  }
+
+  .art-sun {
+    top: -48px;
+    right: -44px;
+    width: 228px;
+    height: 228px;
+  }
+
+  .stamp {
+    top: 18px;
+    left: 18px;
+    width: 72px;
+    height: 72px;
+  }
+
+  .stamp strong {
+    font-size: 21px;
+  }
+
+  .pack {
+    width: 218px;
+    height: 312px;
+  }
+
+  .pack-seal {
+    flex-basis: 33px;
+  }
+
+  .pack-label {
+    margin: 12px;
+    padding: 13px 10px;
+  }
+
+  .pack-brand {
+    font-size: 34px;
+  }
+
+  .pack-name {
+    font-size: 14px;
+  }
+
+  .float-card {
+    bottom: 24px;
+    left: 17px;
+    min-width: 168px;
+    padding: 10px 12px;
+  }
+
+  .float-icon {
+    width: 30px;
+    height: 30px;
+    flex-basis: 30px;
+  }
+
+  .art-leaf {
+    bottom: -30px;
+    left: -44px;
+    width: 180px;
+    height: 180px;
+  }
+
+  .promise-inner {
+    padding: 18px 0;
+  }
+
+  .promise-item {
+    flex: 1 1 50%;
+    padding: 12px 10px 12px 0;
+    border-left: 0;
+  }
+
+  .promise-item:nth-child(even) {
+    padding-left: 22px;
+    border-left: 1px solid var(--line);
+  }
+
+  .promise-item:nth-child(3),
+  .promise-item:nth-child(4) {
+    border-top: 1px solid var(--line);
+  }
+
+  .section {
+    padding: 72px 0;
+  }
+
+  h2 {
+    font-size: clamp(2.15rem, 8.2vw, 2.9rem);
+  }
+
+  .product-grid {
+    gap: 17px;
+    margin-top: 34px;
+  }
+
+  .product-card {
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .product-visual {
+    flex: 0 0 245px;
+    width: 100%;
+    height: 245px;
+    min-height: 0;
+  }
+
+  .product-no {
+    right: 15px;
+    bottom: -16px;
+    font-size: 110px;
+  }
+
+  .cup {
+    width: 144px;
+    height: 144px;
+  }
+
+  .cup::before {
+    width: 118px;
+    height: 118px;
+  }
+
+  .cup::after {
+    width: 68px;
+    height: 52px;
+    border-width: 8px;
+  }
+
+  .product-body {
+    padding: 21px 22px;
+  }
+
+  .product-title h3 {
+    font-size: 23px;
+  }
+
+  .story-art {
+    min-height: 490px;
+    border-radius: 27px;
+  }
+
+  .story-card {
+    top: 9%;
+    left: 6%;
+    width: 66%;
+    min-height: 342px;
+    padding: 20px;
+  }
+
+  .story-big {
+    margin-top: 14px;
+    font-size: 66px;
+  }
+
+  .story-big span {
+    font-size: 20px;
+  }
+
+  .story-card-copy {
+    margin: 15px 0 10px;
+    font-size: 10px;
+  }
+
+  .story-note {
+    right: 6%;
+    bottom: 7%;
+    width: 206px;
+    padding: 17px;
+  }
+
+  .story-note p {
+    font-size: 16px;
+  }
+
+  .story-stamp {
+    top: 20px;
+    right: 20px;
+    width: 64px;
+    height: 64px;
+    font-size: 6px;
+  }
+
+  .story-lede {
+    font-size: 13px;
+  }
+
+  .story-item {
+    padding: 17px 0;
+  }
+
+  .voices {
+    padding-top: 64px;
+  }
+
+  .voices-panel {
+    padding: 30px 24px;
+    border-radius: 27px;
+  }
+
+  .voices-body blockquote {
+    font-size: clamp(1.32rem, 5.4vw, 1.8rem);
+    letter-spacing: -0.035em;
+  }
+
+  .quote-mark {
+    right: 8px;
+    bottom: -42px;
+    font-size: 160px;
+  }
+
+  .cta {
+    padding-top: 0;
+    padding-bottom: 70px;
+  }
+
+  .cta-panel {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 28px;
+    padding: 36px 26px;
+    border-radius: 27px;
+  }
+
+  .cta h2 {
+    font-size: clamp(2.2rem, 9vw, 3rem);
+  }
+
+  .cta-copy > p:last-child {
+    margin-top: 13px;
+    font-size: 10px;
+  }
+
+  .cta-word {
+    right: 4px;
+    bottom: -30px;
+    font-size: 120px;
+  }
+
+  .footer-top {
+    gap: 32px 28px;
+    padding-bottom: 34px;
+  }
+
+  .footer-brand {
+    flex-basis: 100%;
+    max-width: none;
+  }
+
+  .footer-col {
+    flex: 1 1 40%;
+  }
+
+  .footer-bottom {
+    justify-content: flex-start;
+    gap: 7px 18px;
+    padding-top: 17px;
+  }
+
+  .footer-bottom p:nth-child(2) {
+    display: none;
+  }
+}
+
+@media (max-width: 420px) {
+  :root {
+    --shell: calc(100% - 32px);
+  }
+
+  .brand-mark {
+    width: 34px;
+    height: 34px;
+  }
+
+  .brand-mark svg {
+    width: 30px;
+    height: 30px;
+  }
+
+  .brand-type {
+    font-size: 17px;
+  }
+
+  .header-cta {
+    padding: 9px 14px;
+    font-size: 10px;
+  }
+
+  .nav {
+    gap: 8px;
+  }
+
+  .nav a {
+    font-size: 11px;
+  }
+
+  .hero h1 {
+    font-size: 2.7rem;
+  }
+
+  .hero-actions .button {
+    gap: 10px;
+    padding: 14px 20px;
+    font-size: 12px;
+  }
+
+  .text-link {
+    font-size: 12px;
+  }
+
+  .hero-art {
+    min-height: 450px;
+  }
+
+  .stamp {
+    top: 14px;
+    left: 14px;
+    width: 64px;
+    height: 64px;
+  }
+
+  .stamp span {
+    font-size: 5px;
+  }
+
+  .stamp strong {
+    font-size: 18px;
+  }
+
+  .pack {
+    width: 194px;
+    height: 284px;
+  }
+
+  .pack-seal {
+    flex-basis: 29px;
+    font-size: 6px;
+  }
+
+  .pack-label {
+    margin: 10px;
+    padding: 10px 8px;
+  }
+
+  .pack-brand {
+    font-size: 29px;
+  }
+
+  .pack-name {
+    margin-top: 5px;
+    font-size: 12px;
+  }
+
+  .pack-notes {
+    font-size: 7px;
+  }
+
+  .pack-divider {
+    margin: 9px 0;
+  }
+
+  .pack-meta {
+    font-size: 6px;
+  }
+
+  .pack-bottom {
+    padding-bottom: 11px;
+    font-size: 6px;
+  }
+
+  .float-card {
+    bottom: 17px;
+    left: 13px;
+    min-width: 156px;
+    padding: 9px 10px;
+  }
+
+  .float-card div strong {
+    font-size: 11px;
+  }
+
+  .float-icon {
+    width: 27px;
+    height: 27px;
+    flex-basis: 27px;
+  }
+
+  .float-icon svg {
+    width: 17px;
+    height: 17px;
+  }
+
+  .art-sun {
+    width: 195px;
+    height: 195px;
+  }
+
+  .art-leaf {
+    width: 150px;
+    height: 150px;
+  }
+
+  .hero-proof {
+    gap: 11px;
+  }
+
+  .avatar {
+    width: 32px;
+    height: 32px;
+    font-size: 9px;
+  }
+
+  .proof-copy p {
+    font-size: 9px;
+  }
+
+  .promise-item p {
+    font-size: 11px;
+  }
+
+  .promise-item small {
+    font-size: 8px;
+  }
+
+  .product-visual {
+    flex-basis: 225px;
+    height: 225px;
+  }
+
+  .story-art {
+    min-height: 450px;
+  }
+
+  .story-card {
+    top: 7%;
+    left: 4.5%;
+    width: 69%;
+    min-height: 320px;
+    padding: 17px;
+  }
+
+  .story-big {
+    font-size: 58px;
+  }
+
+  .story-card-copy {
+    font-size: 9px;
+  }
+
+  .story-card-copy br {
+    display: none;
+  }
+
+  .story-note {
+    right: 4%;
+    bottom: 5%;
+    width: 185px;
+    padding: 15px;
+  }
+
+  .story-note p {
+    font-size: 14px;
+  }
+
+  .story-note svg {
+    width: 18px;
+    height: 18px;
+    margin-bottom: 8px;
+  }
+
+  .story-note span {
+    margin-top: 8px;
+    font-size: 7px;
+  }
+
+  .story-stamp {
+    top: 16px;
+    right: 14px;
+    width: 58px;
+    height: 58px;
+  }
+
+  .voices-panel {
+    padding: 26px 20px;
+  }
+
+  .cta-panel {
+    padding: 31px 22px;
+  }
+
+  .cta h2 {
+    font-size: 2.15rem;
+  }
+
+  .cta-word {
+    font-size: 98px;
+  }
+
+  .footer-col {
+    flex-basis: 100%;
+  }
+}
+
+@media (max-width: 360px) {
+  .cta h2 {
+    font-size: 1.8rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+  <div class="noise" aria-hidden="true"></div>
+
+  <div class="announcement">
+    <div class="shell announcement-inner">
+      <p>春季新豆「海岛晨光」已上架</p>
+      <a href="#products">新客首单立减 ¥20 <span aria-hidden="true">↗</span></a>
+    </div>
+  </div>
+
+  <header class="site-header">
+    <div class="shell header-inner">
+      <a class="brand" href="#" aria-label="屿见咖啡首页">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 40 40" width="34" height="34" fill="none">
+            <circle cx="20" cy="16" r="7" fill="#e8b64b"/>
+            <path d="M7 26c5-4 9 4 14 0s9-4 12 0M10 32c4-3 7 3 11 0s7-3 10 0" stroke="#f7f0e4" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <span class="brand-type">屿见<small>YUJIAN COFFEE</small></span>
+      </a>
+
+      <nav class="nav" aria-label="主导航">
+        <a href="#products">本季咖啡</a>
+        <a href="#story">烘焙故事</a>
+        <a href="#voices">岛民来信</a>
+        <a href="#visit">到店坐坐</a>
+      </nav>
+
+      <a class="button button--small header-cta" href="#products">
+        选购咖啡
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" aria-hidden="true">
+          <path d="M5 12h13M13 7l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero">
+      <div class="shell hero-inner">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span>ISLAND ROAST · SPRING 2026</p>
+          <h1>把海岛的<span class="ink-accent">慢</span>，<br>烘进每一杯。</h1>
+          <p class="lede">屿见咖啡，来自北纬 24° 的海岛小烘焙所。只选当季豆子，小批量慢烘，让果香、海风与阳光，一起落进你的杯子。</p>
+          <div class="hero-actions">
+            <a class="button" href="#products">
+              选购本季咖啡
+              <svg viewBox="0 0 24 24" width="17" height="17" fill="none" aria-hidden="true">
+                <path d="M5 12h13M13 7l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+            <a class="text-link" href="#story">我们的烘焙故事 <span aria-hidden="true">↗</span></a>
+          </div>
+
+          <div class="hero-proof">
+            <div class="avatar-stack" aria-hidden="true">
+              <span class="avatar avatar--one">林</span>
+              <span class="avatar avatar--two">陈</span>
+              <span class="avatar avatar--three">周</span>
+            </div>
+            <div class="proof-copy">
+              <div class="stars" role="img" aria-label="评分 5 分">★★★★★</div>
+              <p>4.9 · 2,000+ 位咖啡爱好者的日常</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-art">
+          <div class="art-glow" aria-hidden="true"></div>
+          <div class="art-sun" aria-hidden="true"></div>
+          <div class="art-rings" aria-hidden="true"></div>
+
+          <div class="stamp" aria-hidden="true">
+            <span>SMALL</span>
+            <strong>01</strong>
+            <span>BATCH</span>
+          </div>
+
+          <div class="pack" aria-hidden="true">
+            <div class="pack-seal">YUJIAN · 屿见</div>
+            <div class="pack-label">
+              <span class="pack-overline">SPRING / 2026</span>
+              <span class="pack-brand">屿见</span>
+              <span class="pack-name">海岛晨光</span>
+              <span class="pack-notes">柑橘 · 白花 · 蜂蜜</span>
+              <span class="pack-divider"></span>
+              <span class="pack-meta">LIGHT ROAST / 250g</span>
+            </div>
+            <div class="pack-bottom">WHOLE BEAN · 咖啡豆</div>
+          </div>
+
+          <div class="float-card" aria-hidden="true">
+            <span class="float-icon">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none">
+                <path d="M5 9h11v5a5 5 0 0 1-5 5H10a5 5 0 0 1-5-5V9Z" stroke="currentColor" stroke-width="1.6"/>
+                <path d="M16 10h2a3 3 0 1 1 0 6h-2M8 5c0-1 1-1.5 1-2.5M12 5c0-1 1-1.5 1-2.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+              </svg>
+            </span>
+            <div>
+              <span>本季批次</span>
+              <strong>海岛晨光</strong>
+            </div>
+            <span class="float-dot" aria-hidden="true"></span>
+          </div>
+
+          <svg class="art-leaf" viewBox="0 0 180 180" fill="none" aria-hidden="true">
+            <path d="M26 168C54 126 93 82 146 24" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M64 118C38 111 31 87 47 69c22 13 32 31 17 49Z" fill="currentColor"/>
+            <path d="M94 80C78 61 85 39 107 31c10 23 5 42-13 49Z" fill="currentColor"/>
+            <path d="M118 55C122 32 142 21 160 30c-4 22-20 32-42 25Z" fill="currentColor"/>
+          </svg>
+
+          <p class="art-caption" aria-hidden="true">NEW HARVEST — 24°N</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="promise" aria-label="品牌承诺">
+      <div class="shell promise-inner">
+        <div class="promise-item">
+          <span>01</span>
+          <p>单一产地<small>与海岛小农当季合作</small></p>
+        </div>
+        <div class="promise-item">
+          <span>02</span>
+          <p>小批量慢烘<small>每一炉，只有 12 公斤</small></p>
+        </div>
+        <div class="promise-item">
+          <span>03</span>
+          <p>48 小时发出<small>接单后烘焙，锁住新鲜</small></p>
+        </div>
+        <div class="promise-item">
+          <span>04</span>
+          <p>可循环包装<small>把海风留给下一杯</small></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="products section" id="products">
+      <div class="shell">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span>THIS SEASON · 风味豆单</p>
+            <h2>三支豆子，<br>三种海风。</h2>
+          </div>
+          <div class="section-head-aside">
+            <p>本季豆单围绕「明亮的果香」展开。从清晨的第一杯，到傍晚慢慢喝完的那一杯，都能找到合适的味道。</p>
+            <a class="arrow-link" href="#visit">到店试饮全部风味 <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+
+        <div class="product-grid">
+          <article class="product-card">
+            <div class="product-visual product-visual--sun">
+              <span class="product-no" aria-hidden="true">01</span>
+              <span class="roast-pill">浅烘 · LIGHT</span>
+              <div class="cup" aria-hidden="true"></div>
+            </div>
+            <div class="product-body">
+              <div class="product-title">
+                <h3>柑橘日出</h3>
+                <span class="price">¥128</span>
+              </div>
+              <p class="product-en">CITRUS SUNRISE</p>
+              <p class="notes">血橙 · 茉莉 · 蜂蜜</p>
+              <div class="product-foot">
+                <span>250g / 咖啡豆</span>
+                <a href="#cta" aria-label="选购柑橘日出">加入豆单 <span aria-hidden="true">↗</span></a>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-card">
+            <div class="product-visual product-visual--clay">
+              <span class="product-no" aria-hidden="true">02</span>
+              <span class="roast-pill">中烘 · MEDIUM</span>
+              <div class="cup" aria-hidden="true"></div>
+            </div>
+            <div class="product-body">
+              <div class="product-title">
+                <h3>海盐焦糖</h3>
+                <span class="price">¥138</span>
+              </div>
+              <p class="product-en">SEA SALT CARAMEL</p>
+              <p class="notes">焦糖 · 烤榛子 · 海盐</p>
+              <div class="product-foot">
+                <span>250g / 咖啡豆</span>
+                <a href="#cta" aria-label="选购海盐焦糖">加入豆单 <span aria-hidden="true">↗</span></a>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-card">
+            <div class="product-visual product-visual--sage">
+              <span class="product-no" aria-hidden="true">03</span>
+              <span class="roast-pill">中深烘 · DARK</span>
+              <div class="cup" aria-hidden="true"></div>
+            </div>
+            <div class="product-body">
+              <div class="product-title">
+                <h3>椰林晚风</h3>
+                <span class="price">¥128</span>
+              </div>
+              <p class="product-en">PALM BREEZE</p>
+              <p class="notes">黑巧 · 椰糖 · 雪松</p>
+              <div class="product-foot">
+                <span>250g / 咖啡豆</span>
+                <a href="#cta" aria-label="选购椰林晚风">加入豆单 <span aria-hidden="true">↗</span></a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="story section" id="story">
+      <div class="shell story-inner">
+        <div class="story-art" aria-label="烘焙记录卡片装饰">
+          <div class="story-sun" aria-hidden="true"></div>
+          <span class="story-stamp" aria-hidden="true">EST.<br>2019<br>ISLAND</span>
+
+          <article class="story-card">
+            <span class="story-card-label">ROAST LOG / NO. 024</span>
+            <p class="story-big">12<span>kg</span></p>
+            <p class="story-card-copy">小批量，是风味的底线。<br>每一炉，我们都守在旁边。</p>
+            <svg class="roast-curve" viewBox="0 0 240 64" fill="none" aria-hidden="true">
+              <path d="M2 56C33 53 41 17 73 23s36 31 64 19 28-30 59-24 26 15 42 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M2 62h236" stroke="currentColor" stroke-width="1" stroke-dasharray="3 6" opacity=".35"/>
+            </svg>
+            <div class="story-card-foot">
+              <span>当季批次</span>
+              <strong>SLOW ROASTED</strong>
+            </div>
+          </article>
+
+          <div class="story-note">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" aria-hidden="true">
+              <ellipse cx="12" cy="12" rx="7" ry="9" transform="rotate(35 12 12)" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M8 17c2-4 4-7 8-10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            <p>“海风从不赶时间，<br>我们也是。”</p>
+            <span>— 烘焙师 阿屿</span>
+          </div>
+        </div>
+
+        <div class="story-copy">
+          <p class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span>OUR CRAFT · 我们的坚持</p>
+          <h2>好咖啡，<br>不该被催熟。</h2>
+          <p class="story-lede">从枝头到杯中，我们愿意多等一会儿。等果实熟透，等风味舒展，等一杯咖啡，慢慢变成它该有的样子。</p>
+
+          <div class="story-list">
+            <div class="story-item">
+              <span class="story-index">01</span>
+              <div>
+                <h3>当季，单一产地</h3>
+                <p>与海岛小农直接合作，只收当季成熟的果实，杯杯可追溯。</p>
+              </div>
+            </div>
+            <div class="story-item">
+              <span class="story-index">02</span>
+              <div>
+                <h3>12 公斤，一炉一烘</h3>
+                <p>烘焙师全程守火，用更长的梅纳反应时间，放大花果香与甜感。</p>
+              </div>
+            </div>
+            <div class="story-item">
+              <span class="story-index">03</span>
+              <div>
+                <h3>接单之后，才开始烘焙</h3>
+                <p>48 小时内新鲜发出，让刚刚好的风味，准时抵达你的杯子。</p>
+              </div>
+            </div>
+          </div>
+
+          <a class="arrow-link story-link" href="#visit">来烘焙所闻闻豆子 <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="voices" id="voices" aria-label="顾客评价">
+      <div class="shell">
+        <div class="voices-panel">
+          <div class="voices-meta">
+            <p class="eyebrow eyebrow--light"><span class="eyebrow-dot" aria-hidden="true"></span>WORD OF MOUTH</p>
+            <div class="stars" role="img" aria-label="评分 5 分">★★★★★</div>
+            <p class="voices-label">来自岛上朋友的来信</p>
+          </div>
+
+          <div class="voices-body">
+            <blockquote>“第一次觉得，咖啡里真的有海风的味道。现在每天叫醒我的，不是闹钟，是那杯柑橘日出。”</blockquote>
+            <div class="quote-author">
+              <span class="author-avatar" aria-hidden="true">林</span>
+              <p>林女士 · 上海<small>已复购 6 次</small></p>
+            </div>
+          </div>
+
+          <span class="quote-mark" aria-hidden="true">”</span>
+          <div class="voices-sun" aria-hidden="true"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta section" id="cta">
+      <div class="shell">
+        <div class="cta-panel">
+          <div class="cta-sun" aria-hidden="true"></div>
+          <span class="cta-word" aria-hidden="true">屿见</span>
+          <div class="cta-copy">
+            <p class="eyebrow eyebrow--light"><span class="eyebrow-dot" aria-hidden="true"></span>READY FOR A SLOW SIP?</p>
+            <h2>下一杯，去岛上。</h2>
+            <p>新客首单立减 ¥20 · 满 ¥199 包邮</p>
+          </div>
+          <a class="button button--cream" href="#products">
+            逛逛咖啡豆
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" aria-hidden="true">
+              <path d="M5 12h13M13 7l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" id="visit">
+    <div class="shell">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a class="brand brand--footer" href="#" aria-label="屿见咖啡首页">
+            <span class="brand-mark" aria-hidden="true">
+              <svg viewBox="0 0 40 40" width="34" height="34" fill="none">
+                <circle cx="20" cy="16" r="7" fill="#e8b64b"/>
+                <path d="M7 26c5-4 9 4 14 0s9-4 12 0M10 32c4-3 7 3 11 0s7-3 10 0" stroke="#f7f0e4" stroke-width="1.8" stroke-linecap="round"/>
+              </svg>
+            </span>
+            <span class="brand-type">屿见<small>YUJIAN COFFEE</small></span>
+          </a>
+          <p>把海岛的慢，烘进每一杯。<br>愿你在忙碌的日子里，也有一杯咖啡的时间。</p>
+          <div class="socials">
+            <a href="#visit" aria-label="微信公众号">微信</a>
+            <a href="#visit" aria-label="小红书">小红书</a>
+            <a href="#visit" aria-label="Instagram">IG</a>
+          </div>
+        </div>
+
+        <nav class="footer-col" aria-label="探索">
+          <h3>EXPLORE</h3>
+          <a href="#products">本季咖啡</a>
+          <a href="#story">烘焙故事</a>
+          <a href="#voices">岛民来信</a>
+          <a href="#cta">选购指南</a>
+        </nav>
+
+        <div class="footer-col footer-col--visit">
+          <h3>VISIT US</h3>
+          <p>北纬 24° 海岛店<br>望海路 24 号 · 一层</p>
+          <p>周二至周日 09:00 — 18:00<br>周一烘焙日，不营业</p>
+          <a class="footer-contact" href="mailto:hello@yujian.coffee">hello@yujian.coffee</a>
+        </div>
+
+        <div class="footer-col footer-col--hours">
+          <h3>FRESH ROAST</h3>
+          <p class="footer-big">48<span>h</span></p>
+          <p>接单后烘焙，<br>48 小时内新鲜发出。</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 屿见咖啡 YUJIAN COFFEE</p>
+        <p>慢慢烘，慢慢喝。</p>
+        <a href="#main">回到顶部 <span aria-hidden="true">↑</span></a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
