@@ -947,7 +947,10 @@ h2 {
   min-width: 0;
   border: 1px solid var(--line);
   border-radius: 26px;
+  color: inherit;
   background: var(--cream);
+  text-decoration: none;
+  cursor: pointer;
   overflow: hidden;
   transition:
     transform 0.35s var(--ease),
@@ -1143,7 +1146,8 @@ h2 {
   font-size: 9px;
 }
 
-.product-foot a {
+.product-foot a,
+.product-foot .product-add {
   display: inline-flex;
   align-items: center;
   gap: 5px;
@@ -1154,16 +1158,19 @@ h2 {
   transition: color 0.2s ease;
 }
 
-.product-foot a span {
+.product-foot a span,
+.product-foot .product-add span {
   color: var(--accent);
   transition: transform 0.25s var(--ease);
 }
 
-.product-foot a:hover {
+.product-foot a:hover,
+.product-card:hover .product-add {
   color: var(--accent);
 }
 
-.product-foot a:hover span {
+.product-foot a:hover span,
+.product-card:hover .product-add span {
   transform: translate(2px, -2px);
 }
 
@@ -2565,6 +2572,1035 @@ h2 {
   }
 }
 
+/* ---------- coffee detail subview ---------- */
+
+.coffee-view[hidden] {
+  display: none !important;
+}
+
+body.is-detail main > section {
+  display: none;
+}
+
+.coffee-view {
+  --cup-accent: #e8b64b;
+  --cup-deep: #a86a25;
+  --cup-cream: #f6e6c9;
+  --stage-a: #efc76d;
+  --stage-b: #d9a24a;
+  --wash: #f5e8ce;
+  background:
+    radial-gradient(circle at 90% 0, rgba(255, 250, 240, 0.72), transparent 30%),
+    linear-gradient(180deg, var(--wash) 0, var(--paper) 760px);
+}
+
+.coffee-view[data-theme="caramel"] {
+  --cup-accent: #d97554;
+  --cup-deep: #9e4c33;
+  --cup-cream: #f3ddc9;
+  --stage-a: #da8d69;
+  --stage-b: #c56848;
+  --wash: #f4e0d4;
+}
+
+.coffee-view[data-theme="palm"] {
+  --cup-accent: #98b59e;
+  --cup-deep: #4f6b52;
+  --cup-cream: #e6ecdf;
+  --stage-a: #a4b8a1;
+  --stage-b: #839f86;
+  --wash: #e6ecdf;
+}
+
+.detail-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding-top: 26px;
+}
+
+.detail-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--ink-2);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+
+.detail-back svg {
+  transition: transform 0.25s var(--ease);
+}
+
+.detail-back:hover {
+  color: var(--accent);
+}
+
+.detail-back:hover svg {
+  transform: translateX(-3px);
+}
+
+.detail-topbar-note {
+  color: var(--muted);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+}
+
+.coffee-hero {
+  display: flex;
+  align-items: center;
+  gap: clamp(42px, 6vw, 92px);
+  padding: clamp(26px, 4vw, 42px) 0 clamp(56px, 8vw, 92px);
+}
+
+.coffee-copy {
+  flex: 1 1 52%;
+  min-width: 0;
+  max-width: 620px;
+}
+
+.coffee-copy .eyebrow {
+  margin-bottom: 18px;
+}
+
+.coffee-title {
+  margin: 0;
+  color: var(--ink);
+  font-size: clamp(3.35rem, 6.8vw, 6.15rem);
+  font-weight: 700;
+  letter-spacing: -0.07em;
+  line-height: 0.96;
+}
+
+.coffee-title-en {
+  display: block;
+  margin-top: 15px;
+  color: var(--muted);
+  font-family: var(--font-sans);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  line-height: 1.4;
+}
+
+.coffee-tagline {
+  margin: 26px 0 0;
+  color: var(--cup-deep);
+  font-family: var(--font-serif);
+  font-size: clamp(1.18rem, 2vw, 1.48rem);
+  line-height: 1.55;
+}
+
+.coffee-lede {
+  max-width: 520px;
+  margin: 15px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.95;
+}
+
+.coffee-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 22px;
+  margin-top: 27px;
+}
+
+.coffee-roast {
+  padding: 8px 12px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  color: var(--ink-2);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.coffee-price {
+  color: var(--accent);
+  font-family: var(--font-serif);
+  font-size: 28px;
+  letter-spacing: 0.01em;
+  line-height: 1;
+}
+
+.coffee-price small {
+  margin-left: 5px;
+  color: var(--muted);
+  font-family: var(--font-sans);
+  font-size: 9px;
+  letter-spacing: 0.04em;
+}
+
+.coffee-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 24px;
+  margin-top: 30px;
+}
+
+.coffee-stage {
+  position: relative;
+  display: flex;
+  flex: 1 1 48%;
+  align-items: center;
+  justify-content: center;
+  min-height: 590px;
+  border-radius: 36px;
+  background: linear-gradient(145deg, var(--stage-a) 0%, var(--stage-b) 100%);
+  box-shadow: 0 36px 70px -48px rgba(48, 31, 18, 0.8);
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.coffee-stage::before {
+  position: absolute;
+  top: -130px;
+  right: -120px;
+  width: 330px;
+  height: 330px;
+  border: 1px solid rgba(255, 250, 240, 0.2);
+  border-radius: 50%;
+  content: "";
+  background: rgba(255, 250, 240, 0.08);
+}
+
+.coffee-stage::after {
+  position: absolute;
+  bottom: -150px;
+  left: -130px;
+  width: 360px;
+  height: 360px;
+  border: 1px solid rgba(255, 250, 240, 0.16);
+  border-radius: 50%;
+  content: "";
+}
+
+.stage-no {
+  position: absolute;
+  right: 14px;
+  bottom: -38px;
+  z-index: 1;
+  color: rgba(255, 250, 240, 0.16);
+  font-family: var(--font-serif);
+  font-size: 196px;
+  font-weight: 600;
+  letter-spacing: -0.08em;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.stage-card {
+  position: absolute;
+  top: 22px;
+  left: 22px;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 13px;
+  border: 1px solid rgba(255, 250, 240, 0.42);
+  border-radius: 14px;
+  background: rgba(255, 250, 240, 0.8);
+  box-shadow: 0 14px 24px -22px rgba(48, 31, 18, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.stage-card-dot {
+  width: 6px;
+  height: 6px;
+  flex: 0 0 6px;
+  border-radius: 50%;
+  background: var(--ink);
+}
+
+.stage-card div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.stage-card span {
+  color: var(--muted);
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
+.stage-card strong {
+  color: var(--ink);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.coffee-cup {
+  position: relative;
+  z-index: 3;
+  display: block;
+  width: min(78%, 372px);
+  aspect-ratio: 1;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.coffee-cup:focus-visible {
+  outline: 2px solid var(--cream);
+  outline-offset: 6px;
+}
+
+.cup-svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  filter: drop-shadow(0 28px 26px rgba(48, 31, 18, 0.28));
+}
+
+.cup-rotor {
+  transform-box: view-box;
+  transform-origin: 50% 50%;
+  will-change: transform;
+}
+
+.coffee-cup.is-spinning .cup-rotor {
+  animation: cup-spin 24s linear infinite;
+}
+
+.coffee-cup.is-paused .cup-rotor {
+  animation-play-state: paused;
+}
+
+@keyframes cup-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.cup-saucer {
+  fill: rgba(255, 250, 240, 0.14);
+  stroke: rgba(255, 250, 240, 0.26);
+  stroke-width: 1.4;
+}
+
+.cup-saucer-inner {
+  fill: none;
+  stroke: rgba(255, 250, 240, 0.18);
+  stroke-width: 1;
+}
+
+.cup-shadow {
+  fill: rgba(48, 31, 18, 0.22);
+}
+
+.cup-handle {
+  fill: none;
+  stroke: var(--cup-cream);
+  stroke-linecap: round;
+  stroke-width: 28;
+}
+
+.cup-handle-inner {
+  fill: none;
+  opacity: 0.18;
+  stroke: var(--cup-deep);
+  stroke-linecap: round;
+  stroke-width: 8;
+}
+
+.cup-outer {
+  fill: var(--cup-cream);
+}
+
+.cup-rim {
+  fill: var(--cup-accent);
+}
+
+.cup-inner {
+  fill: var(--cup-deep);
+}
+
+.cup-coffee {
+  fill: url(#coffee-surface);
+}
+
+.crema-line {
+  fill: none;
+  stroke: rgba(255, 248, 236, 0.58);
+  stroke-linecap: round;
+  stroke-width: 3;
+}
+
+.crema-fill {
+  fill: rgba(255, 248, 236, 0.2);
+}
+
+.crema-dot {
+  fill: rgba(255, 248, 236, 0.48);
+}
+
+.cup-hint {
+  position: absolute;
+  bottom: 22px;
+  left: 50%;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0;
+  padding: 9px 14px;
+  border: 1px solid rgba(255, 250, 240, 0.34);
+  border-radius: 999px;
+  background: rgba(255, 250, 240, 0.82);
+  color: var(--ink-2);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  transform: translateX(-50%);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.cup-hint-dot {
+  width: 5px;
+  height: 5px;
+  flex: 0 0 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: hint-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes hint-pulse {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(0.85);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.detail-block {
+  padding: clamp(56px, 7vw, 86px) 0;
+  border-top: 1px solid var(--line);
+}
+
+.detail-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 22px 42px;
+}
+
+.detail-heading .eyebrow {
+  margin-bottom: 14px;
+}
+
+.detail-heading h2 {
+  max-width: 760px;
+}
+
+.detail-aside {
+  max-width: 260px;
+  margin: 0 0 7px;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 1.8;
+  text-align: right;
+}
+
+.flavor-layers {
+  display: flex;
+  gap: 16px;
+  margin-top: 34px;
+}
+
+.flavor-layer {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  min-width: 0;
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: rgba(255, 250, 240, 0.58);
+}
+
+.flavor-layer-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.flavor-layer-no {
+  color: var(--accent);
+  font-family: var(--font-serif);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+}
+
+.flavor-label {
+  color: var(--muted);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
+.flavor-layer h3 {
+  margin: 13px 0 0;
+  color: var(--ink);
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.3;
+}
+
+.flavor-layer p {
+  margin: 7px 0 22px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+.flavor-scale {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: auto;
+}
+
+.flavor-bar {
+  flex: 1;
+  height: 4px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(23, 60, 50, 0.1);
+}
+
+.flavor-bar span {
+  display: block;
+  width: var(--level);
+  height: 100%;
+  border-radius: inherit;
+  background: var(--cup-deep);
+}
+
+.flavor-score {
+  flex: 0 0 auto;
+  color: var(--muted);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.origin-block {
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(40px, 6vw, 86px);
+}
+
+.origin-intro {
+  flex: 1 1 42%;
+  min-width: 0;
+  max-width: 540px;
+}
+
+.origin-intro .eyebrow {
+  margin-bottom: 14px;
+}
+
+.origin-intro h2 {
+  font-size: clamp(2rem, 3.4vw, 3.2rem);
+}
+
+.origin-intro p:last-child {
+  max-width: 470px;
+  margin: 19px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.95;
+}
+
+.fact-grid {
+  display: flex;
+  flex: 1 1 58%;
+  flex-wrap: wrap;
+  min-width: 0;
+  margin: 0;
+  border-top: 1px solid var(--line);
+}
+
+.fact {
+  flex: 1 1 50%;
+  min-width: 0;
+  padding: 17px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.fact:nth-child(odd) {
+  padding-right: 18px;
+}
+
+.fact:nth-child(even) {
+  padding-left: 18px;
+  border-left: 1px solid var(--line);
+}
+
+.fact dt {
+  margin: 0;
+  color: var(--muted);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
+.fact dd {
+  margin: 5px 0 0;
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+.review-summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 12px;
+  padding-bottom: 6px;
+}
+
+.review-summary strong {
+  color: var(--ink);
+  font-family: var(--font-serif);
+  font-size: 38px;
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.review-summary .stars {
+  color: #bb8424;
+  font-size: 11px;
+}
+
+.review-summary p {
+  flex-basis: 100%;
+  margin: 0;
+  color: var(--muted);
+  font-size: 9px;
+  letter-spacing: 0.04em;
+}
+
+.review-grid {
+  display: flex;
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.review-card {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  min-width: 0;
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: var(--cream);
+}
+
+.review-card .stars {
+  color: #bb8424;
+  font-size: 10px;
+}
+
+.review-card blockquote {
+  margin: 17px 0 20px;
+  color: var(--ink-2);
+  font-family: var(--font-serif);
+  font-size: 17px;
+  line-height: 1.62;
+}
+
+.review-person {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+
+.review-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  flex: 0 0 30px;
+  border-radius: 50%;
+  color: var(--ink);
+  background: var(--paper-deep);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.review-person div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.review-person strong {
+  color: var(--ink);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.review-person small {
+  color: var(--muted);
+  font-size: 8px;
+  letter-spacing: 0.02em;
+}
+
+.brew-block {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 26px 40px;
+  margin-top: 4px;
+  padding: 30px 32px;
+  border-radius: 26px;
+  color: var(--cream);
+  background: var(--ink);
+}
+
+.brew-copy {
+  flex: 1 1 250px;
+}
+
+.brew-copy .eyebrow {
+  margin-bottom: 10px;
+}
+
+.brew-copy h3 {
+  margin: 0;
+  color: var(--cream);
+  font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.3;
+}
+
+.brew-copy p {
+  margin: 7px 0 0;
+  color: rgba(255, 250, 240, 0.62);
+  font-size: 10px;
+  line-height: 1.7;
+}
+
+.brew-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px 32px;
+}
+
+.brew-fact {
+  min-width: 68px;
+}
+
+.brew-fact strong {
+  display: block;
+  color: var(--sun);
+  font-family: var(--font-serif);
+  font-size: 23px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.brew-fact span {
+  display: block;
+  margin-top: 5px;
+  color: rgba(255, 250, 240, 0.56);
+  font-size: 8px;
+  letter-spacing: 0.1em;
+}
+
+.detail-end {
+  display: flex;
+  justify-content: center;
+  padding: clamp(54px, 7vw, 82px) 0 clamp(60px, 7vw, 86px);
+}
+
+.detail-end .button {
+  gap: 10px;
+}
+
+@media (max-width: 960px) {
+  .coffee-hero {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 38px;
+  }
+
+  .coffee-copy {
+    max-width: 720px;
+  }
+
+  .coffee-stage {
+    width: 100%;
+    max-width: 620px;
+    min-height: 540px;
+    align-self: center;
+  }
+
+  .origin-block {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .origin-intro {
+    max-width: 680px;
+  }
+
+  .fact-grid {
+    width: 100%;
+  }
+
+  .review-grid {
+    flex-direction: column;
+  }
+
+  .review-card blockquote {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 840px) {
+  .flavor-layers {
+    flex-direction: column;
+  }
+
+  .flavor-layer p {
+    margin-bottom: 18px;
+  }
+
+  .brew-block {
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 700px) {
+  .detail-topbar {
+    padding-top: 18px;
+  }
+
+  .detail-topbar-note {
+    display: none;
+  }
+
+  .coffee-hero {
+    padding-top: 22px;
+    padding-bottom: 58px;
+  }
+
+  .coffee-title {
+    font-size: clamp(2.9rem, 13vw, 4.2rem);
+  }
+
+  .coffee-title-en {
+    margin-top: 11px;
+    font-size: 8px;
+  }
+
+  .coffee-tagline {
+    margin-top: 21px;
+    font-size: 1.15rem;
+  }
+
+  .coffee-lede {
+    font-size: 12px;
+  }
+
+  .coffee-meta {
+    margin-top: 22px;
+  }
+
+  .coffee-price {
+    font-size: 24px;
+  }
+
+  .coffee-actions {
+    margin-top: 24px;
+  }
+
+  .coffee-stage {
+    min-height: 470px;
+    border-radius: 28px;
+  }
+
+  .stage-card {
+    top: 16px;
+    left: 16px;
+    padding: 8px 11px;
+  }
+
+  .coffee-cup {
+    width: 82%;
+  }
+
+  .stage-no {
+    right: 8px;
+    bottom: -25px;
+    font-size: 154px;
+  }
+
+  .cup-hint {
+    bottom: 15px;
+    padding: 8px 12px;
+    font-size: 8px;
+  }
+
+  .detail-block {
+    padding: 50px 0;
+  }
+
+  .detail-aside {
+    max-width: none;
+    margin: 0;
+    text-align: left;
+  }
+
+  .flavor-layers,
+  .review-grid {
+    margin-top: 26px;
+  }
+
+  .flavor-layer {
+    padding: 21px;
+  }
+
+  .fact {
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+
+  .brew-block {
+    padding: 24px 22px;
+    border-radius: 22px;
+  }
+
+  .brew-facts {
+    gap: 14px 24px;
+  }
+
+  .brew-fact strong {
+    font-size: 21px;
+  }
+
+  .detail-end {
+    padding-top: 46px;
+  }
+}
+
+@media (max-width: 420px) {
+  .coffee-stage {
+    min-height: 420px;
+  }
+
+  .stage-card {
+    display: none;
+  }
+
+  .coffee-cup {
+    width: 86%;
+  }
+
+  .stage-no {
+    font-size: 132px;
+  }
+
+  .coffee-actions .button {
+    gap: 9px;
+    padding: 14px 19px;
+    font-size: 12px;
+  }
+
+  .review-card {
+    padding: 20px;
+  }
+
+  .review-card blockquote {
+    font-size: 17px;
+  }
+
+  .brew-facts {
+    gap: 13px 20px;
+  }
+
+  .brew-fact {
+    min-width: 62px;
+  }
+
+  .brew-fact strong {
+    font-size: 19px;
+  }
+}
+
+@media (max-width: 360px) {
+  .coffee-title {
+    font-size: 2.7rem;
+  }
+
+  .detail-heading h2 {
+    font-size: 1.85rem;
+  }
+
+  .coffee-stage {
+    min-height: 390px;
+  }
+
+  .cup-hint {
+    font-size: 7px;
+  }
+
+  .fact {
+    flex-basis: 100%;
+    padding-right: 0;
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .fact:nth-child(odd) {
+    padding-right: 0;
+  }
+
+  .fact:nth-child(even) {
+    padding-left: 0;
+    border-left: 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -2736,7 +3772,7 @@ h2 {
         </div>
 
         <div class="product-grid">
-          <article class="product-card">
+          <a class="product-card" href="#coffee/citrus" data-coffee="citrus">
             <div class="product-visual product-visual--sun">
               <span class="product-no" aria-hidden="true">01</span>
               <span class="roast-pill">浅烘 · LIGHT</span>
@@ -2751,12 +3787,12 @@ h2 {
               <p class="notes">血橙 · 茉莉 · 蜂蜜</p>
               <div class="product-foot">
                 <span>250g / 咖啡豆</span>
-                <a href="#cta" aria-label="选购柑橘日出">加入豆单 <span aria-hidden="true">↗</span></a>
+                <span class="product-add">查看详情 <span aria-hidden="true">↗</span></span>
               </div>
             </div>
-          </article>
+          </a>
 
-          <article class="product-card">
+          <a class="product-card" href="#coffee/caramel" data-coffee="caramel">
             <div class="product-visual product-visual--clay">
               <span class="product-no" aria-hidden="true">02</span>
               <span class="roast-pill">中烘 · MEDIUM</span>
@@ -2771,12 +3807,12 @@ h2 {
               <p class="notes">焦糖 · 烤榛子 · 海盐</p>
               <div class="product-foot">
                 <span>250g / 咖啡豆</span>
-                <a href="#cta" aria-label="选购海盐焦糖">加入豆单 <span aria-hidden="true">↗</span></a>
+                <span class="product-add">查看详情 <span aria-hidden="true">↗</span></span>
               </div>
             </div>
-          </article>
+          </a>
 
-          <article class="product-card">
+          <a class="product-card" href="#coffee/palm" data-coffee="palm">
             <div class="product-visual product-visual--sage">
               <span class="product-no" aria-hidden="true">03</span>
               <span class="roast-pill">中深烘 · DARK</span>
@@ -2791,10 +3827,10 @@ h2 {
               <p class="notes">黑巧 · 椰糖 · 雪松</p>
               <div class="product-foot">
                 <span>250g / 咖啡豆</span>
-                <a href="#cta" aria-label="选购椰林晚风">加入豆单 <span aria-hidden="true">↗</span></a>
+                <span class="product-add">查看详情 <span aria-hidden="true">↗</span></span>
               </div>
             </div>
-          </article>
+          </a>
         </div>
       </div>
     </section>
@@ -2905,6 +3941,8 @@ h2 {
         </div>
       </div>
     </section>
+
+    <div class="coffee-view" id="coffee-view" hidden></div>
   </main>
 
   <footer class="site-footer" id="visit">
@@ -2957,5 +3995,372 @@ h2 {
       </div>
     </div>
   </footer>
+
+  <script>
+  (function () {
+    var coffees = {
+      citrus: {
+        theme: "citrus",
+        no: "01",
+        name: "柑橘日出",
+        en: "CITRUS SUNRISE",
+        price: "128",
+        roast: "浅烘 · LIGHT",
+        stageNote: "2026 SPRING · 250g",
+        tagline: "像把一颗血橙切开，放在晨光里。",
+        lede: "来自耶加雪菲高地的水洗豆。入口是血橙与葡萄柚的明亮酸质，中段浮出茉莉与蜂蜜，尾韵干净，像海风掠过舌尖。",
+        notes: ["血橙", "葡萄柚", "茉莉", "蜂蜜"],
+        layers: [
+          { label: "前调", title: "明亮的柑橘皮", score: 8, text: "血橙、葡萄柚与青柠皮，酸质明亮但不尖。" },
+          { label: "中调", title: "茉莉与蜂蜜", score: 7, text: "温度降下来后，橙花、茉莉和蜂蜜慢慢清晰。" },
+          { label: "余韵", title: "干净的海盐尾", score: 6, text: "红茶、白桃与一点海盐，收得干净。" }
+        ],
+        origin: {
+          title: "从火山土，到杯底。",
+          text: "孔加合作社位于耶加雪菲高地的火山土坡面，昼夜温差让果实慢慢积累糖分。我们只收当季成熟的红色果，水洗后低温慢干，保留血橙般的明亮酸质。",
+          facts: [
+            ["原产地", "埃塞俄比亚 · 耶加雪菲"],
+            ["庄园 / 合作社", "孔加合作社"],
+            ["海拔", "1,950–2,100 m"],
+            ["品种", "耶加雪菲原生种"],
+            ["处理法", "水洗 · 72 小时发酵"],
+            ["采收季", "2026 春季"]
+          ]
+        },
+        reviews: [
+          { name: "林女士", city: "上海", date: "2026.03.18", stars: 5, text: "开袋就是血橙皮和茉莉的香气。手冲到第二段，蜂蜜甜感慢慢出来，放凉了也没有涩味。", repurchase: "已复购 6 次" },
+          { name: "陈先生", city: "杭州", date: "2026.02.26", stars: 5, text: "做冰美式很惊喜，酸质像葡萄柚，尾段有红茶感。夏天会常备。", repurchase: "已复购 2 次" },
+          { name: "周女士", city: "厦门", date: "2026.03.02", stars: 4, text: "干香很迷人，手冲需要稍微磨粗一点。喜欢它干净的海盐尾韵。", repurchase: "首次购买" }
+        ],
+        rating: "4.9",
+        reviewCount: "128",
+        brewTitle: "按 15g 豆，慢慢冲一杯。",
+        brewNote: "15g 豆 / 240ml 水 · 三段注水 · 最后轻轻晃匀",
+        brew: [
+          ["92°C", "水温"],
+          ["1:16", "粉水比"],
+          ["2:30", "总时长"],
+          ["中细", "研磨度"]
+        ]
+      },
+      caramel: {
+        theme: "caramel",
+        no: "02",
+        name: "海盐焦糖",
+        en: "SEA SALT CARAMEL",
+        price: "138",
+        roast: "中烘 · MEDIUM",
+        stageNote: "2026 SPRING · 250g",
+        tagline: "焦糖在杯底慢慢化开，海盐收住尾音。",
+        lede: "厌氧日晒带来的甜感，不靠添加。焦糖、烤榛子与一点海盐在口中铺开，醇厚但不腻，适合加奶，也适合慢慢喝。",
+        notes: ["焦糖", "烤榛子", "海盐"],
+        layers: [
+          { label: "前调", title: "海盐与焦糖", score: 7, text: "海盐、焦糖与烤杏仁，像刚出锅的坚果糖。" },
+          { label: "中调", title: "榛子与奶油", score: 8, text: "榛子、可可与奶油，甜感圆润。" },
+          { label: "余韵", title: "黑糖回甘", score: 7, text: "黑糖、雪松与回甘，尾段不拖沓。" }
+        ],
+        origin: {
+          title: "从山谷，到杯底。",
+          text: "慧兰山谷的拉斯玛利亚斯庄园，咖啡与香蕉、柑橘混种。厌氧日晒让果胶中的糖分充分转化，带来焦糖与榛子般的甜感，海盐收尾让整体更干净。",
+          facts: [
+            ["原产地", "哥伦比亚 · 慧兰"],
+            ["庄园 / 合作社", "拉斯玛利亚斯庄园"],
+            ["海拔", "1,700–1,850 m"],
+            ["品种", "卡图拉"],
+            ["处理法", "厌氧日晒 · 96 小时"],
+            ["采收季", "2026 春季"]
+          ]
+        },
+        reviews: [
+          { name: "赵先生", city: "北京", date: "2026.03.09", stars: 5, text: "焦糖和榛子香很足，加奶之后像液体坚果糖。海盐把甜感收住了，不腻。", repurchase: "已复购 4 次" },
+          { name: "何女士", city: "成都", date: "2026.02.20", stars: 5, text: "做拿铁特别合适，可可和奶油感明显。冷天早上喝一杯很治愈。", repurchase: "已复购 3 次" },
+          { name: "徐先生", city: "深圳", date: "2026.01.30", stars: 4, text: "中烘的醇厚度刚好，尾段有一点雪松。手冲建议水温低一点。", repurchase: "首次购买" }
+        ],
+        rating: "4.8",
+        reviewCount: "96",
+        brewTitle: "加奶，或者纯饮都好。",
+        brewNote: "15g 豆 / 225ml 水 · 两段注水 · 想要更甜可降到 88°C",
+        brew: [
+          ["90°C", "水温"],
+          ["1:15", "粉水比"],
+          ["2:45", "总时长"],
+          ["中细", "研磨度"]
+        ]
+      },
+      palm: {
+        theme: "palm",
+        no: "03",
+        name: "椰林晚风",
+        en: "PALM BREEZE",
+        price: "128",
+        roast: "中深烘 · DARK",
+        stageNote: "2026 SPRING · 250g",
+        tagline: "晚风穿过椰林，留下黑巧与雪松。",
+        lede: "湿刨法处理的曼特宁，黑巧与椰糖是主调，雪松和丁香在后段浮现。低酸、厚实，适合夜晚或冷萃。",
+        notes: ["黑巧", "椰糖", "雪松"],
+        layers: [
+          { label: "前调", title: "椰糖与黑巧", score: 6, text: "椰糖、黑巧与丁香，香气低沉。" },
+          { label: "中调", title: "雪松与烤椰子", score: 8, text: "雪松、烤椰子与糖蜜，醇厚饱满。" },
+          { label: "余韵", title: "很长的木质尾", score: 9, text: "黑巧、檀木与海盐，余味很长。" }
+        ],
+        origin: {
+          title: "从雨林，到杯底。",
+          text: "苏门答腊的雨林边缘，铁皮卡在湿润空气里缓慢生长。湿刨法赋予豆子深色香料与木质调，烘焙时我们放慢升温，让黑巧和椰糖的甜感舒展开来。",
+          facts: [
+            ["原产地", "印度尼西亚 · 苏门答腊"],
+            ["庄园 / 合作社", "林东曼特宁产区"],
+            ["海拔", "1,300–1,500 m"],
+            ["品种", "铁皮卡"],
+            ["处理法", "湿刨法"],
+            ["采收季", "2026 春季"]
+          ]
+        },
+        reviews: [
+          { name: "王先生", city: "广州", date: "2026.03.11", stars: 5, text: "黑巧和雪松很明显，几乎没有酸。晚上做冷萃，第二天喝很顺滑。", repurchase: "已复购 5 次" },
+          { name: "许女士", city: "南京", date: "2026.02.14", stars: 5, text: "椰糖的甜感很特别，不是香精味。加一点海盐更干净。", repurchase: "已复购 2 次" },
+          { name: "刘先生", city: "武汉", date: "2026.01.22", stars: 4, text: "厚重、低酸，适合冬天。手冲时水温不要太高，不然会苦。", repurchase: "首次购买" }
+        ],
+        rating: "4.9",
+        reviewCount: "74",
+        brewTitle: "把水温降下来，甜感更清楚。",
+        brewNote: "15g 豆 / 210ml 水 · 三段注水 · 冷萃建议 1:10 浸泡 12 小时",
+        brew: [
+          ["88°C", "水温"],
+          ["1:14", "粉水比"],
+          ["3:00", "总时长"],
+          ["中粗", "研磨度"]
+        ]
+      }
+    };
+
+    var view = document.getElementById("coffee-view");
+    var activeCoffee = null;
+
+    function cupSvg() {
+      return '<svg class="cup-svg" viewBox="0 0 460 460" aria-hidden="true" focusable="false">' +
+        '<defs>' +
+          '<radialGradient id="coffee-surface" cx="34%" cy="26%" r="78%">' +
+            '<stop offset="0" stop-color="#c18a5d"></stop>' +
+            '<stop offset="0.38" stop-color="#8b5531"></stop>' +
+            '<stop offset="0.72" stop-color="#5c331d"></stop>' +
+            '<stop offset="1" stop-color="#351b0e"></stop>' +
+          '</radialGradient>' +
+        '</defs>' +
+        '<circle class="cup-saucer" cx="230" cy="230" r="208"></circle>' +
+        '<circle class="cup-saucer-inner" cx="230" cy="230" r="188"></circle>' +
+        '<ellipse class="cup-shadow" cx="236" cy="244" rx="168" ry="158"></ellipse>' +
+        '<g transform="rotate(-26 100 356)" opacity=".65">' +
+          '<rect x="91" y="326" width="11" height="68" rx="5.5" fill="rgba(255,250,240,.44)"></rect>' +
+          '<ellipse cx="96.5" cy="320" rx="17" ry="11" fill="rgba(255,250,240,.44)"></ellipse>' +
+        '</g>' +
+        '<g class="cup-rotor">' +
+          '<path class="cup-handle" d="M366 174c48 2 76 27 76 64s-28 62-76 64"></path>' +
+          '<path class="cup-handle-inner" d="M366 174c48 2 76 27 76 64s-28 62-76 64"></path>' +
+          '<circle class="cup-outer" cx="230" cy="222" r="168"></circle>' +
+          '<circle class="cup-rim" cx="230" cy="222" r="157"></circle>' +
+          '<circle class="cup-inner" cx="230" cy="222" r="144"></circle>' +
+          '<circle class="cup-coffee" cx="230" cy="222" r="132"></circle>' +
+          '<g class="latte-art">' +
+            '<path class="crema-fill" d="M230 140c-8 42-8 87 0 132 20-32 44-48 72-60-26-14-50-38-72-72z"></path>' +
+            '<path class="crema-line" d="M230 140c-8 42-8 87 0 132"></path>' +
+            '<path class="crema-line" d="M230 183c20-12 39-14 57-4M230 211c22-12 42-13 62-2M230 239c19-10 37-10 54-1"></path>' +
+            '<circle class="crema-dot" cx="188" cy="188" r="4"></circle>' +
+            '<circle class="crema-dot" cx="283" cy="266" r="3"></circle>' +
+            '<circle class="crema-dot" cx="202" cy="285" r="2.5"></circle>' +
+          '</g>' +
+        '</g>' +
+      '</svg>';
+    }
+
+    function renderCoffee(c) {
+      var layers = c.layers.map(function (layer, index) {
+        return '<article class="flavor-layer">' +
+          '<div class="flavor-layer-top">' +
+            '<span class="flavor-layer-no">0' + (index + 1) + '</span>' +
+            '<span class="flavor-label">' + layer.label + '</span>' +
+          '</div>' +
+          '<h3>' + layer.title + '</h3>' +
+          '<p>' + layer.text + '</p>' +
+          '<div class="flavor-scale">' +
+            '<div class="flavor-bar" aria-hidden="true"><span style="--level:' + (layer.score * 10) + '%"></span></div>' +
+            '<span class="flavor-score">' + layer.score + '/10</span>' +
+          '</div>' +
+        '</article>';
+      }).join('');
+
+      var facts = c.origin.facts.map(function (fact) {
+        return '<div class="fact"><dt>' + fact[0] + '</dt><dd>' + fact[1] + '</dd></div>';
+      }).join('');
+
+      var reviews = c.reviews.map(function (review) {
+        var stars = '★★★★★☆☆☆☆☆'.slice(5 - review.stars, 10 - review.stars);
+        return '<article class="review-card">' +
+          '<span class="stars" aria-label="' + review.stars + ' 分">' + stars + '</span>' +
+          '<blockquote>“' + review.text + '”</blockquote>' +
+          '<div class="review-person">' +
+            '<span class="review-avatar" aria-hidden="true">' + review.name.slice(0, 1) + '</span>' +
+            '<div><strong>' + review.name + ' · ' + review.city + '</strong><small>' + review.date + ' · ' + review.repurchase + '</small></div>' +
+          '</div>' +
+        '</article>';
+      }).join('');
+
+      var brew = c.brew.map(function (item) {
+        return '<div class="brew-fact"><strong>' + item[0] + '</strong><span>' + item[1] + '</span></div>';
+      }).join('');
+
+      return '<article class="coffee-detail" data-theme="' + c.theme + '" aria-labelledby="coffee-title">' +
+        '<div class="shell">' +
+          '<div class="detail-topbar">' +
+            '<a class="detail-back" href="#products">' +
+              '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" aria-hidden="true"><path d="M19 12H6M11 7l-5 5 5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+              '返回豆单' +
+            '</a>' +
+            '<span class="detail-topbar-note">SINGLE ORIGIN / 250 G</span>' +
+          '</div>' +
+
+          '<section class="coffee-hero">' +
+            '<div class="coffee-copy">' +
+              '<p class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span>' + c.no + ' / ' + c.en + '</p>' +
+              '<h1 class="coffee-title" id="coffee-title">' + c.name + '<span class="coffee-title-en">' + c.en + '</span></h1>' +
+              '<p class="coffee-tagline">' + c.tagline + '</p>' +
+              '<p class="coffee-lede">' + c.lede + '</p>' +
+              '<div class="coffee-meta">' +
+                '<span class="coffee-roast">' + c.roast + '</span>' +
+                '<span class="coffee-price">¥' + c.price + '<small>/ 250g</small></span>' +
+              '</div>' +
+              '<div class="coffee-actions">' +
+                '<a class="button" href="#cta">把这支豆子带回家' +
+                  '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" aria-hidden="true"><path d="M5 12h13M13 7l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+                '</a>' +
+                '<a class="text-link" href="#products">回到豆单</a>' +
+              '</div>' +
+            '</div>' +
+
+            '<div class="coffee-stage">' +
+              '<span class="stage-no" aria-hidden="true">' + c.no + '</span>' +
+              '<div class="stage-card">' +
+                '<span class="stage-card-dot" aria-hidden="true"></span>' +
+                '<div><span>本季批次</span><strong>' + c.stageNote + '</strong></div>' +
+              '</div>' +
+              '<button class="coffee-cup" type="button" aria-pressed="false" aria-label="点击让' + c.name + '的咖啡杯缓慢旋转">' + cupSvg() + '</button>' +
+              '<p class="cup-hint" aria-live="polite"><span class="cup-hint-dot" aria-hidden="true"></span><span data-cup-hint>点一下杯子，让它慢慢转</span></p>' +
+            '</div>' +
+          '</section>' +
+
+          '<section class="detail-block" aria-labelledby="flavor-title">' +
+            '<div class="detail-heading">' +
+              '<div><p class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span>TASTING NOTES · 口感层次</p><h2 id="flavor-title">一口，三层海风。</h2></div>' +
+              '<p class="detail-aside">' + c.notes.join(' · ') + '</p>' +
+            '</div>' +
+            '<div class="flavor-layers">' + layers + '</div>' +
+          '</section>' +
+
+          '<section class="detail-block origin-block" aria-labelledby="origin-title">' +
+            '<div class="origin-intro">' +
+              '<p class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span>ORIGIN / 原产地</p>' +
+              '<h2 id="origin-title">' + c.origin.title + '</h2>' +
+              '<p>' + c.origin.text + '</p>' +
+            '</div>' +
+            '<dl class="fact-grid">' + facts + '</dl>' +
+          '</section>' +
+
+          '<section class="detail-block" aria-labelledby="reviews-title">' +
+            '<div class="detail-heading">' +
+              '<div><p class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span>WORD OF MOUTH · 用户评价</p><h2 id="reviews-title">喝过的人，这样说。</h2></div>' +
+              '<div class="review-summary"><strong>' + c.rating + '</strong><span class="stars" aria-label="' + c.rating + ' 分">★★★★★</span><p>' + c.reviewCount + ' 位岛民的评价</p></div>' +
+            '</div>' +
+            '<div class="review-grid">' + reviews + '</div>' +
+          '</section>' +
+
+          '<section class="brew-block" id="brew" aria-labelledby="brew-title">' +
+            '<div class="brew-copy"><p class="eyebrow eyebrow--light"><span class="eyebrow-dot" aria-hidden="true"></span>BREW GUIDE · 冲煮建议</p><h3 id="brew-title">' + c.brewTitle + '</h3><p>' + c.brewNote + '</p></div>' +
+            '<div class="brew-facts">' + brew + '</div>' +
+          '</section>' +
+
+          '<div class="detail-end"><a class="button" href="#products">回到豆单' +
+            '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" aria-hidden="true"><path d="M5 12h13M13 7l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+          '</a></div>' +
+        '</div>' +
+      '</article>';
+    }
+
+    function bindCup() {
+      var button = view.querySelector(".coffee-cup");
+      var hint = view.querySelector("[data-cup-hint]");
+      if (!button) return;
+
+      button.addEventListener("click", function () {
+        var started = button.classList.contains("is-spinning");
+        if (!started) {
+          button.classList.add("is-spinning");
+          button.classList.remove("is-paused");
+        } else {
+          button.classList.toggle("is-paused");
+        }
+
+        var running = button.classList.contains("is-spinning") && !button.classList.contains("is-paused");
+        button.setAttribute("aria-pressed", running ? "true" : "false");
+        button.setAttribute("aria-label", running ? "暂停咖啡杯旋转" : (started ? "继续让咖啡杯缓慢旋转" : "点击让咖啡杯缓慢旋转"));
+
+        if (hint) {
+          hint.textContent = running ? "正在慢慢旋转 · 再点一下暂停" : (started ? "已暂停 · 再点一下继续" : "点一下杯子，让它慢慢转");
+        }
+      });
+    }
+
+    function openCoffee(id) {
+      var coffee = coffees[id];
+      if (!coffee) {
+        closeCoffee();
+        return;
+      }
+
+      if (activeCoffee !== id) {
+        view.innerHTML = renderCoffee(coffee);
+        view.dataset.theme = coffee.theme;
+        bindCup();
+        activeCoffee = id;
+      }
+
+      view.hidden = false;
+      document.body.classList.add("is-detail");
+      document.title = coffee.name + " · 屿见咖啡";
+      window.scrollTo(0, 0);
+    }
+
+    function closeCoffee() {
+      view.hidden = true;
+      document.body.classList.remove("is-detail");
+      document.title = "屿见咖啡 · 把海岛的慢，烘进每一杯";
+      activeCoffee = null;
+    }
+
+    function route() {
+      var match = window.location.hash.match(/^#coffee\/([a-z-]+)/);
+      if (match) {
+        openCoffee(match[1]);
+        return;
+      }
+
+      var wasDetail = document.body.classList.contains("is-detail");
+      closeCoffee();
+
+      if (wasDetail) {
+        var targetId = window.location.hash.replace("#", "");
+        var target = targetId ? document.getElementById(targetId) : null;
+        if (target) {
+          window.setTimeout(function () {
+            target.scrollIntoView({ block: "start" });
+          }, 0);
+        } else {
+          window.scrollTo(0, 0);
+        }
+      }
+    }
+
+    window.addEventListener("hashchange", route);
+    route();
+  })();
+  </script>
 </body>
 </html>
